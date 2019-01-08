@@ -8,7 +8,7 @@ uses
   System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.ExtCtrls, Vcl.Imaging.pngimage, Unit2, IniFiles,
   System.Net.URLClient, System.Net.HttpClient, System.Net.HttpClientComponent,
   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdMultipartFormData,
-  System.JSON, Vcl.StdCtrls, Unit3;
+  System.JSON, Vcl.StdCtrls, Unit3, IdURI;
 
 const
     INI_FILE = 'configs.ini';
@@ -55,7 +55,7 @@ type
     procedure LoadConfigs;
     procedure SaveConfigs;
     procedure AddToListView(email, country, description, virus, fishing, add_date,
-                         hack_date, priority, comments, status : string);
+                         hack_date, comments, status : string);
     procedure ChangeStatus(status : String);
   public
     { Public declarations }
@@ -114,10 +114,6 @@ begin
         NewColumn.AutoSize := True;
 
         NewColumn := Columns.Add;
-        NewColumn.Caption := 'Приоритет';
-        NewColumn.AutoSize := True;
-
-        NewColumn := Columns.Add;
         NewColumn.Caption := 'Комментарий';
         NewColumn.AutoSize := True;
 
@@ -133,7 +129,7 @@ end;
 
 
 procedure TFormMain.AddToListView(email, country, description, virus, fishing, add_date,
-                     hack_date, priority, comments, status : string);
+                     hack_date, comments, status : string);
 var
     ListItem: TListItem;
 begin
@@ -147,10 +143,9 @@ begin
         ListItem.SubItems.Add(fishing);
         ListItem.SubItems.Add(add_date);
         ListItem.SubItems.Add(hack_date);
-        ListItem.SubItems.Add(priority);
         ListItem.SubItems.Add(comments);
         ListItem.SubItems.Add('');
-        ListItem.SubItemImages[8] := StrToInt(status);
+        ListItem.SubItemImages[7] := StrToInt(status);
         Statuses.Add(status);
     end;
 end;
@@ -292,8 +287,7 @@ begin
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[5]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[6]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[7]).JsonValue.Value,
-                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[8]).JsonValue.Value,
-                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[9]).JsonValue.Value);
+                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[8]).JsonValue.Value);
     end;
     MainTable.Selected := SelectedItem;
 end;
@@ -309,11 +303,11 @@ begin
     data.AddFormField('emails',target.email);
     data.AddFormField('sender', target.sender);
     data.AddFormField('sender_password', target.sender_password);
-    data.AddFormField('subject', target.subject);
-    data.AddFormField('body', target.body);
-    data.AddFormField('method', target.method);
-    data.AddFormField('country', target.country);
-    data.AddFormField('description', target.description);
+    data.AddFormField('subject', target.subject, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('body', target.body, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('method', target.method, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('country', target.country, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('description', target.description, 'utf-8').ContentTransfer := '8bit';
     try
         res := IdHTTP1.Post(URL + '/manager/1/', data);
     finally

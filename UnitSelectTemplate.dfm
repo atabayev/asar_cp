@@ -57,7 +57,13 @@ object FormSelectTemplate: TFormSelectTemplate
       Width = 175
       Height = 546
       Align = alClient
-      ItemHeight = 13
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Comic Sans MS'
+      Font.Style = []
+      ItemHeight = 23
+      ParentFont = False
       TabOrder = 0
       OnClick = lbTemplatesClick
       ExplicitLeft = 24

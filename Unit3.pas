@@ -30,12 +30,14 @@ type
     Label1: TLabel;
     Panel4: TPanel;
     Panel5: TPanel;
+    LabeledEdit1: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure ReadDataFromFile(FileName : string);
     procedure btnAddToStackClick(Sender: TObject);
     procedure btnSelectTemplateClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -88,15 +90,18 @@ var
     i : integer;
     target: TTarget;
 begin
-
-
     for i := 0 to lvQueue.Items.Count-1 do
     with FormMain.MainTable do begin
         target.email := lvQueue.Items.Item[i].Caption;
         target.sender := lvQueue.Items.Item[i].SubItems.Strings[0];
         target.sender_password := lvQueue.Items.Item[i].SubItems.Strings[1];
         target.subject := lvQueue.Items.Item[i].SubItems.Strings[2];
-        target.body := lvQueue.Items.Item[i].SubItems.Strings[3]; //TODO: Добавить текст html
+
+        tmpMemo.Lines.LoadFromFile('D:\Templates\' +
+                                   lvQueue.Items.Item[i].SubItems.Strings[3]);
+        target.body := tmpMemo.Text;
+//        target.body := lvQueue.Items.Item[i].SubItems.Strings[3]; //TODO: Добавить текст html
+
         target.method := methodCode;
         target.country := lvQueue.Items.Item[i].SubItems.Strings[5];
         target.description := lvQueue.Items.Item[i].SubItems.Strings[6];
@@ -151,35 +156,52 @@ end;
 procedure TFormAddEmails.FormCreate(Sender: TObject);
 var
     NewColumn: TListColumn;
+    OnePercentOfWidth: Integer;
 begin
+    OnePercentOfWidth := lvQueue.Width div 100;
+    lvQueue.Clear;
     with lvQueue do begin
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Почта';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 13;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Отправитель';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 13;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Пароль отправителя';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 10;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Тема';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 16;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Шаблон';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 10;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Метод';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 7;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Страна';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 7;
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Описание';
         NewColumn.AutoSize := True;
+//        NewColumn.Width := OnePercentOfWidth * 24;
     end;
+    FormAddEmails.Width := 1500;
     cbTemplate.Items.LoadFromFile('templates.txt');
     cbTemplate.ItemIndex := 0;
+end;
+
+procedure TFormAddEmails.FormShow(Sender: TObject);
+begin
+    lvQueue.Clear;
 end;
 
 end.

@@ -2,8 +2,8 @@ object FormAddEmails: TFormAddEmails
   Left = 0
   Top = 0
   Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1072' '#1072#1090#1072#1082#1080
-  ClientHeight = 698
-  ClientWidth = 1124
+  ClientHeight = 811
+  ClientWidth = 1384
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,29 +12,30 @@ object FormAddEmails: TFormAddEmails
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 297
     Top = 0
-    Width = 827
-    Height = 623
+    Width = 1087
+    Height = 736
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 209
-    ExplicitWidth = 462
-    ExplicitHeight = 551
+    ExplicitWidth = 827
+    ExplicitHeight = 623
     object lvQueue: TListView
       Left = 1
       Top = 1
-      Width = 825
-      Height = 621
+      Width = 1085
+      Height = 734
       Align = alClient
       Columns = <>
+      RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
-      ExplicitLeft = 5
-      ExplicitWidth = 709
+      ExplicitWidth = 825
+      ExplicitHeight = 621
     end
     object tmpMemo: TMemo
       Left = 48
@@ -47,8 +48,8 @@ object FormAddEmails: TFormAddEmails
   end
   object btnAddToStack: TButton
     Left = 0
-    Top = 623
-    Width = 1124
+    Top = 736
+    Width = 1384
     Height = 75
     Align = alBottom
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1074' '#1086#1095#1077#1088#1077#1076#1100
@@ -60,15 +61,17 @@ object FormAddEmails: TFormAddEmails
     ParentFont = False
     TabOrder = 1
     OnClick = btnAddToStackClick
-    ExplicitTop = 627
+    ExplicitTop = 623
+    ExplicitWidth = 1124
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
     Width = 297
-    Height = 623
+    Height = 736
     Align = alLeft
     TabOrder = 2
+    ExplicitHeight = 623
     object Label6: TLabel
       Left = 21
       Top = 441
@@ -97,24 +100,23 @@ object FormAddEmails: TFormAddEmails
     end
     object Button2: TButton
       Left = 1
-      Top = 511
+      Top = 624
       Width = 295
       Height = 40
       Align = alBottom
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' ->'
       TabOrder = 0
       OnClick = Button2Click
-      ExplicitTop = 512
+      ExplicitTop = 511
     end
     object Panel3: TPanel
       Left = 1
-      Top = 551
+      Top = 664
       Width = 295
       Height = 71
       Align = alBottom
       TabOrder = 1
-      ExplicitTop = 479
-      ExplicitWidth = 207
+      ExplicitTop = 551
       object Button3: TButton
         Left = 1
         Top = 15
@@ -125,8 +127,6 @@ object FormAddEmails: TFormAddEmails
         Enabled = False
         TabOrder = 0
         OnClick = Button3Click
-        ExplicitTop = 19
-        ExplicitHeight = 31
       end
       object Panel4: TPanel
         Left = 1
@@ -135,7 +135,6 @@ object FormAddEmails: TFormAddEmails
         Height = 15
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 56
       end
       object Panel5: TPanel
         Left = 1
@@ -189,6 +188,7 @@ object FormAddEmails: TFormAddEmails
       Font.Style = []
       ParentFont = False
       TabOrder = 4
+      Text = 'e1dos@mail.ru'
     end
     object ledSendersEmail: TLabeledEdit
       Left = 19
@@ -211,6 +211,7 @@ object FormAddEmails: TFormAddEmails
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      Text = 'garond@mail.ru'
     end
     object ledSendersEmPswd: TLabeledEdit
       Left = 19
@@ -233,6 +234,7 @@ object FormAddEmails: TFormAddEmails
       Font.Style = []
       ParentFont = False
       TabOrder = 6
+      Text = 'Ee060919515'
     end
     object ledSubject: TLabeledEdit
       Left = 19
@@ -255,6 +257,7 @@ object FormAddEmails: TFormAddEmails
       Font.Style = []
       ParentFont = False
       TabOrder = 7
+      Text = #1058#1077#1084#1072' '#1087#1080#1089#1100#1084#1072
     end
     object ledCounytry: TLabeledEdit
       Left = 19
@@ -277,13 +280,45 @@ object FormAddEmails: TFormAddEmails
       Font.Style = []
       ParentFont = False
       TabOrder = 8
+      Text = #1050#1047
     end
     object mmDescription: TMemo
       Left = 19
       Top = 360
       Width = 260
       Height = 73
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Comic Sans MS'
+      Font.Style = []
+      Lines.Strings = (
+        #1055#1088#1086#1089#1090#1086' '#1090#1077#1082#1089#1090#1086#1074#1086#1077' '#1086#1087#1080#1089#1072#1085#1080' '
+        #1087#1086#1095#1090#1099)
+      ParentFont = False
       TabOrder = 9
+    end
+    object LabeledEdit1: TLabeledEdit
+      Left = 19
+      Top = 533
+      Width = 260
+      Height = 31
+      EditLabel.Width = 125
+      EditLabel.Height = 23
+      EditLabel.Caption = #1040#1076#1088#1077#1089' '#1093#1086#1089#1090#1080#1085#1075#1072':'
+      EditLabel.Font.Charset = RUSSIAN_CHARSET
+      EditLabel.Font.Color = clWindowText
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Comic Sans MS'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Comic Sans MS'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 10
     end
   end
   object OpenDialog1: TOpenDialog
