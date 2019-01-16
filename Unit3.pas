@@ -5,32 +5,64 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ComCtrls, Vcl.OleCtrls, SHDocVw, UnitSelectTemplate;
+  Vcl.ComCtrls, Vcl.OleCtrls, SHDocVw, UnitSelectTemplate, Vcl.Buttons, Vcl.ValEdit, Vcl.CategoryButtons;
 
 type
+  TTarget = Record
+    email: string;
+    sender: string;
+    sender_password: string;
+    subject: string;
+    body_name: string;
+    method: string;
+    country: string;
+    description: string;
+    comment: string;
+    host: string;
+    user: string;
+    pswd: string;
+  end;
+
   TFormAddEmails = class(TForm)
     Panel1: TPanel;
     btnAddToStack: TButton;
     lvQueue: TListView;
-    Panel2: TPanel;
-    Button2: TButton;
+    OpenDialog1: TOpenDialog;
+    pCategory: TPanel;
+    CategoryPanelGroup1: TCategoryPanelGroup;
+    CategoryPanel1: TCategoryPanel;
+    Label4: TLabel;
+    Label5: TLabel;
+    edSendersEmail: TEdit;
+    edSendersEmPswd: TEdit;
+    CategoryPanel2: TCategoryPanel;
     Panel3: TPanel;
     Button3: TButton;
-    OpenDialog1: TOpenDialog;
-    tmpMemo: TMemo;
-    Label6: TLabel;
-    cbTemplate: TComboBox;
-    btnSelectTemplate: TButton;
-    ledEmail: TLabeledEdit;
-    ledSendersEmail: TLabeledEdit;
-    ledSendersEmPswd: TLabeledEdit;
-    ledSubject: TLabeledEdit;
-    ledCounytry: TLabeledEdit;
-    mmDescription: TMemo;
-    Label1: TLabel;
     Panel4: TPanel;
-    Panel5: TPanel;
-    LabeledEdit1: TLabeledEdit;
+    Button2: TButton;
+    Label7: TLabel;
+    edEmail: TEdit;
+    Label8: TLabel;
+    cbMethod: TComboBox;
+    edSubject: TEdit;
+    Label9: TLabel;
+    edCounytry: TEdit;
+    Label10: TLabel;
+    Label11: TLabel;
+    CategoryPanel3: TCategoryPanel;
+    Label12: TLabel;
+    mmDescription: TMemo;
+    mmComment: TMemo;
+    Label13: TLabel;
+    CategoryPanel4: TCategoryPanel;
+    edFtpHost: TEdit;
+    Label14: TLabel;
+    Label15: TLabel;
+    edFtpUser: TEdit;
+    edFtpPswd: TEdit;
+    Label16: TLabel;
+    btnSelectTemplate: TButton;
+    edTemplate: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -41,7 +73,7 @@ type
   private
     { Private declarations }
   public
-    procedure Start(Mtd : ShortInt; Template : String);
+    procedure Edit(trg: TTarget);
     { Public declarations }
   end;
 
@@ -58,37 +90,17 @@ uses unit1;
 
 {$R *.dfm}
 
-
-procedure TFormAddEmails.Start(Mtd : ShortInt; Template : String);
+procedure TFormAddEmails.Edit(trg: TTarget);
 begin
-    PathToTemplate := Template;
-    case Mtd of
-            1: begin
-                fish := '+';
-                vir := '-';
-                method := 'Фишинг';
-                methodCode := '1';
-            end;
-            2: begin
-                fish := '-';
-                vir := '+';
-                method := 'Вирус';
-                methodCode := '2';
-            end;
-            3: begin
-                fish := '+';
-                vir := '+';
-                method := 'Фишинг + Вирус';
-                methodCode := '3';
-            end;
-        end;
+
 end;
+
 
 procedure TFormAddEmails.btnAddToStackClick(Sender: TObject);
 var
     ListItem: TListItem;
     i : integer;
-    target: TTarget;
+    target: unit1.TTarget;
 begin
     for i := 0 to lvQueue.Items.Count-1 do
     with FormMain.MainTable do begin
@@ -96,15 +108,13 @@ begin
         target.sender := lvQueue.Items.Item[i].SubItems.Strings[0];
         target.sender_password := lvQueue.Items.Item[i].SubItems.Strings[1];
         target.subject := lvQueue.Items.Item[i].SubItems.Strings[2];
-
-        tmpMemo.Lines.LoadFromFile('D:\Templates\' +
-                                   lvQueue.Items.Item[i].SubItems.Strings[3]);
-        target.body := tmpMemo.Text;
-//        target.body := lvQueue.Items.Item[i].SubItems.Strings[3]; //TODO: Добавить текст html
-
-        target.method := methodCode;
+        target.body_name := edTemplate.Text;
+        target.method := IntToStr(cbMethod.ItemIndex + 1);
         target.country := lvQueue.Items.Item[i].SubItems.Strings[5];
         target.description := lvQueue.Items.Item[i].SubItems.Strings[6];
+        target.host := edFtpHost.Text;
+        target.user := edFtpUser.Text;
+        target.pswd := edFtpPswd.Text;
         FormMain.AddToStack(target);
     end;
     FormAddEmails.Close;
@@ -121,13 +131,13 @@ var
 begin
     with lvQueue do begin
         ListItem := Items.Add;
-        ListItem.Caption := ledEmail.Text;
-        ListItem.SubItems.Add(ledSendersEmail.Text);
-        ListItem.SubItems.Add(ledSendersEmPswd.Text);
-        ListItem.SubItems.Add(ledSubject.Text);
-        ListItem.SubItems.Add(cbTemplate.Text);
-        ListItem.SubItems.Add(method);
-        ListItem.SubItems.Add(ledCounytry.Text);
+        ListItem.Caption := edEmail.Text;
+        ListItem.SubItems.Add(edSendersEmail.Text);
+        ListItem.SubItems.Add(edSendersEmPswd.Text);
+        ListItem.SubItems.Add(edSubject.Text);
+        ListItem.SubItems.Add(edTemplate.Text);
+        ListItem.SubItems.Add(cbMethod.Text);
+        ListItem.SubItems.Add(edCounytry.Text);
         ListItem.SubItems.Add(mmDescription.Text);
     end;
 ;end;
@@ -145,6 +155,7 @@ var
 begin
 
 end;
+
 
 procedure TFormAddEmails.Button3Click(Sender: TObject);
 begin
@@ -195,8 +206,6 @@ begin
 //        NewColumn.Width := OnePercentOfWidth * 24;
     end;
     FormAddEmails.Width := 1500;
-    cbTemplate.Items.LoadFromFile('templates.txt');
-    cbTemplate.ItemIndex := 0;
 end;
 
 procedure TFormAddEmails.FormShow(Sender: TObject);

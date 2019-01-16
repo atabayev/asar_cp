@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ToolWin,
-  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.ExtCtrls, Vcl.Imaging.pngimage, Unit2, IniFiles,
+  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.ExtCtrls, Vcl.Imaging.pngimage, IniFiles,
   System.Net.URLClient, System.Net.HttpClient, System.Net.HttpClientComponent,
   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdMultipartFormData,
   System.JSON, Vcl.StdCtrls, Unit3, IdURI;
@@ -22,41 +22,52 @@ type
     sender: string;
     sender_password: string;
     subject: string;
-    body: string;
+    body_name: string;
     method: string;
     country: string;
     description: string;
     comment: string;
+    host: string;
+    user: string;
+    pswd: string;
   end;
 
   TFormMain = class(TForm)
     ToolBar1: TToolBar;
     ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
-    ToolButton3: TToolButton;
     ImageList1: TImageList;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     Image1: TImage;
     MainTable: TListView;
     StatusesImageList: TImageList;
-    NetHTTPClient1: TNetHTTPClient;
     IdHTTP1: TIdHTTP;
     Timer1: TTimer;
+    pLoadTemplate: TPanel;
+    ldTemplateName: TLabeledEdit;
+    Label1: TLabel;
+    mmDescriotion: TMemo;
+    Button1: TButton;
+    Panel2: TPanel;
+    Button2: TButton;
+    Button3: TButton;
+    FileOpenDialog: TFileOpenDialog;
+    lPathToTemplate: TLabel;
+    mmTmp: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ToolButton5Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure ToolButton4Click(Sender: TObject);
-    procedure ToolButton3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure ToolButton5Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     procedure LoadConfigs;
     procedure SaveConfigs;
-    procedure AddToListView(email, country, description, virus, fishing, add_date,
+    procedure AddToListView(email, country, description, method, virus, fishing, add_date,
                          hack_date, comments, status : string);
-    procedure ChangeStatus(status : String);
   public
     { Public declarations }
     procedure UpdateTable;
@@ -83,7 +94,6 @@ procedure TFormMain.FormCreate(Sender: TObject);
 var
     NewColumn: TListColumn;
 begin
-
     with MainTable do begin
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Почта';
@@ -95,6 +105,10 @@ begin
 
         NewColumn := Columns.Add;
         NewColumn.Caption := 'Описание';
+        NewColumn.AutoSize := True;
+
+        NewColumn := Columns.Add;
+        NewColumn.Caption := 'Метод';
         NewColumn.AutoSize := True;
 
         NewColumn := Columns.Add;
@@ -128,7 +142,7 @@ begin
 end;
 
 
-procedure TFormMain.AddToListView(email, country, description, virus, fishing, add_date,
+procedure TFormMain.AddToListView(email, country, description, method, virus, fishing, add_date,
                      hack_date, comments, status : string);
 var
     ListItem: TListItem;
@@ -139,6 +153,7 @@ begin
         ListItem.Caption := email;
         ListItem.SubItems.Add(country);
         ListItem.SubItems.Add(description);
+        ListItem.SubItems.Add(method);
         ListItem.SubItems.Add(virus);
         ListItem.SubItems.Add(fishing);
         ListItem.SubItems.Add(add_date);
@@ -151,76 +166,24 @@ begin
 end;
 
 
-procedure TFormMain.ChangeStatus(status : String);
-begin
-    MainTable.Items[0].SubItemImages[8] := StrToInt(status)
-end;
-
 
 
 procedure TFormMain.Timer1Timer(Sender: TObject);
 begin
-    UpdateTable
+    UpdateTable;
 end;
 
 procedure TFormMain.ToolButton1Click(Sender: TObject);
 begin
-    FormSelectMethod.Show;
+    FormAddEmails.Show;
 end;
 
 
-procedure TFormMain.ToolButton3Click(Sender: TObject);
-var
-    data: TIdMultiPartFormDataStream;
-    res : string;
-    json: TJSONObject;
-    JsonToSend: TStringStream;
-begin
-    JsonToSend := TStringStream.Create(
-    '{'+
-      '"token":"111"'+
-      '"emails": "garond@mail.ru",'+
-      '"sender": "E1dos@mail.ru",'+
-      '"sender_password": "Ee060919515.",'+
-      '"subject": "тема",'+
-      '"body": "<html> <b>тееело</b> </html>",'+
-      '"method": "2",'+
-      '"country": "КЗ",'+
-      '"description": "нету"'
-    );
-    JsonToSend.LoadFromFile('D:\json.json');
-    IdHTTP1.Request.ContentType := 'application/json';
-    IdHTTP1.Request.ContentEncoding := 'utf-8';
-    try
-        res := IdHTTP1.Post(URL + '/manager/1/', JsonToSend);
-    finally
-        data.Free;
-    end;
-    json := TJSONObject.ParseJSONValue(res) as TJSONObject;
-    ShowMessage(json.ToString);
-end;
-
-procedure TFormMain.ToolButton4Click(Sender: TObject);
-var
-    target : TTarget;
-begin
-    target.email := 'E1dos@mail.ru,atabayev.yeldos@gmail.com';
-    target.sender := 'garond@mail.ru';
-    target.sender_password := 'Ee060919515';
-    target.subject := 'Тест';
-    target.body := '<html> Hello world! </html>';
-    target.method := '2';
-    target.country := 'КЗ';
-    target.description := 'Тестовая почта';
-    AddToStack(target);
-//    ChangeStatus('1');
-end;
 
 procedure TFormMain.ToolButton5Click(Sender: TObject);
 begin
-    UpdateTable;
+    pLoadTemplate.Visible := true;
 end;
-
 
 procedure TFormMain.LoadConfigs;
 var
@@ -260,14 +223,15 @@ end;
 
 procedure TFormMain.UpdateTable;
 var
-    result : string;
+    result,
+    mth : string;
     data: TIdMultiPartFormDataStream;
     json: TJSONObject;
     JSONArray: TJSONArray;
-    i, j : integer;
+    i : integer;
 begin
     data := TIdMultiPartFormDataStream.Create;
-    data.AddFormField('token', token);
+    data.AddFormField('token', token, 'utf-8').ContentTransfer := '8bit';
     try
         result := IdHTTP1.get(URL + '?token=' + token);
     finally
@@ -279,18 +243,27 @@ begin
     MainTable.Clear;
     for i := 0 to JSONArray.Count - 1 do
     begin
+        if TJSONPair(TJSONArray(JSONArray.Items[i]).Items[3]).JsonValue.Value = '1' then
+            mth := 'Фишинг';
+        if TJSONPair(TJSONArray(JSONArray.Items[i]).Items[3]).JsonValue.Value = '2' then
+            mth := 'Вирус';
+        if TJSONPair(TJSONArray(JSONArray.Items[i]).Items[3]).JsonValue.Value = '3' then
+            mth := 'Вирус+Фишинг';
         AddToListView(TJSONPair(TJSONArray(JSONArray.Items[i]).Items[0]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[1]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[2]).JsonValue.Value,
-                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[3]).JsonValue.Value,
+                   mth,
+//                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[3]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[4]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[5]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[6]).JsonValue.Value,
                    TJSONPair(TJSONArray(JSONArray.Items[i]).Items[7]).JsonValue.Value,
-                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[8]).JsonValue.Value);
+                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[8]).JsonValue.Value,
+                   TJSONPair(TJSONArray(JSONArray.Items[i]).Items[9]).JsonValue.Value);
     end;
     MainTable.Selected := SelectedItem;
 end;
+
 
 function  TFormMain.AddToStack(target : TTarget) : string;
 var
@@ -299,23 +272,67 @@ var
     json: TJSONObject;
 begin
     data := TIdMultiPartFormDataStream.Create;
-    data.AddFormField('token', token);
-    data.AddFormField('emails',target.email);
-    data.AddFormField('sender', target.sender);
-    data.AddFormField('sender_password', target.sender_password);
+    data.AddFormField('token', token, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('emails',target.email, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('sender', target.sender, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('sender_password', target.sender_password, 'utf-8');
     data.AddFormField('subject', target.subject, 'utf-8').ContentTransfer := '8bit';
-    data.AddFormField('body', target.body, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('body_name', target.body_name, 'utf-8').ContentTransfer := '8bit';
     data.AddFormField('method', target.method, 'utf-8').ContentTransfer := '8bit';
     data.AddFormField('country', target.country, 'utf-8').ContentTransfer := '8bit';
     data.AddFormField('description', target.description, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('host', target.host, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('user', target.user, 'utf-8').ContentTransfer := '8bit';
+    data.AddFormField('pswd', target.pswd, 'utf-8').ContentTransfer := '8bit';
     try
         res := IdHTTP1.Post(URL + '/manager/1/', data);
     finally
         data.Free;
     end;
     json := TJSONObject.ParseJSONValue(res) as TJSONObject;
-//  TODO: Распарсить ответ и вернуть в result
-    ShowMessage(json.ToString);
+    ShowMessage(json.GetValue('response').Value);
+end;
+
+procedure TFormMain.Button1Click(Sender: TObject);
+begin
+    if FileOpenDialog.Execute then begin
+        lPathToTemplate.Caption := FileOpenDialog.FileName;
+        mmTmp.Lines.LoadFromFile(lPathToTemplate.Caption, TEncoding.UTF8);
+    end;
+end;
+
+procedure TFormMain.Button2Click(Sender: TObject);
+var
+    data: TIdMultiPartFormDataStream;
+    result : string;
+    json: TJSONObject;
+    TemplateText : string;
+begin
+    data := TIdMultiPartFormDataStream.Create;
+    data.AddFormField('token', token, 'utf-8').ContentTransfer:='8bit';
+    data.AddFormField('name',ldTemplateName.Text, 'utf-8').ContentTransfer:='8bit';
+    data.AddFormField('description', mmDescriotion.Text, 'utf-8').ContentTransfer:='8bit';
+    data.AddFormField('template', mmTmp.Text, 'utf-8').ContentTransfer:='8bit';
+    try
+        result := IdHTTP1.Post(URL + '/manager/load_template/', data);
+    finally
+        data.Free;
+    end;
+    json := TJSONObject.ParseJSONValue(result) as TJSONObject;
+    if (json.GetValue('response').Value = 'ok') then
+        ShowMessage('Шаблон добавлен');
+    pLoadTemplate.Visible := false;
+    ldTemplateName.Clear;
+    mmDescriotion.Clear;
+    lPathToTemplate.Caption := '';
+end;
+
+procedure TFormMain.Button3Click(Sender: TObject);
+begin
+    pLoadTemplate.Visible := false;
+    ldTemplateName.Clear;
+    mmDescriotion.Clear;
+    lPathToTemplate.Caption := '';
 end;
 
 end.

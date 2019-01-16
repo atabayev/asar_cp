@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.730,D:\Projects\delphi_projects\ASAR CP\Project1.dproj=D:\Projects\delphi_projects\Project1.dproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.564,=D:\Projects\delphi_projects\ASAR CP\Unit2.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.532,=D:\Projects\delphi_projects\ASAR CP\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.996,D:\Projects\delphi_projects\ASAR CP\UnitSelectTemplate.dfm=D:\Projects\delphi_projects\ASAR CP\Unit4.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.745,=D:\Projects\delphi_projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.996,D:\Projects\delphi_projects\ASAR CP\Unit4.dfm=D:\Projects\delphi_projects\ASAR CP\UnitSelectTemplate.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.194,D:\Projects\delphi_projects\ASAR CP\Unit1.pas=D:\Projects\delphi_projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.194,D:\Projects\delphi_projects\Unit1.pas=D:\Projects\delphi_projects\ASAR CP\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.532,=D:\Projects\delphi_projects\ASAR CP\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.730,D:\Projects\delphi_projects\Project1.dproj=D:\Projects\delphi_projects\ASAR CP\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.194,D:\Projects\delphi_projects\Unit1.dfm=D:\Projects\delphi_projects\ASAR CP\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.214,=D:\Projects\delphi_projects\ASAR CP\Unit4.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.996,D:\Projects\delphi_projects\ASAR CP\Unit4.pas=D:\Projects\delphi_projects\ASAR CP\UnitSelectTemplate.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.194,D:\Projects\delphi_projects\ASAR CP\Unit1.dfm=D:\Projects\delphi_projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.996,D:\Projects\delphi_projects\ASAR CP\UnitSelectTemplate.pas=D:\Projects\delphi_projects\ASAR CP\Unit4.pas</Transaction>
   </Transactions>
 </BorlandProject>

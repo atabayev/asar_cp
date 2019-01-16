@@ -2,8 +2,8 @@ object FormMain: TFormMain
   Left = 0
   Top = 0
   Caption = #1040#1057#1040#1056
-  ClientHeight = 628
-  ClientWidth = 1051
+  ClientHeight = 671
+  ClientWidth = 1099
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -70,7 +70,7 @@ object FormMain: TFormMain
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 1051
+    Width = 1099
     Height = 57
     ButtonHeight = 54
     ButtonWidth = 55
@@ -84,28 +84,14 @@ object FormMain: TFormMain
       ImageIndex = 0
       OnClick = ToolButton1Click
     end
-    object ToolButton2: TToolButton
-      Left = 55
-      Top = 0
-      Caption = 'ToolButton2'
-      ImageIndex = 1
-    end
-    object ToolButton3: TToolButton
-      Left = 110
-      Top = 0
-      Caption = 'ToolButton3'
-      ImageIndex = 2
-      OnClick = ToolButton3Click
-    end
     object ToolButton4: TToolButton
-      Left = 165
+      Left = 55
       Top = 0
       Caption = 'ToolButton4'
       ImageIndex = 3
-      OnClick = ToolButton4Click
     end
     object ToolButton5: TToolButton
-      Left = 220
+      Left = 110
       Top = 0
       Caption = 'ToolButton5'
       ImageIndex = 4
@@ -115,8 +101,8 @@ object FormMain: TFormMain
   object MainTable: TListView
     Left = 0
     Top = 57
-    Width = 1051
-    Height = 571
+    Width = 1099
+    Height = 614
     Align = alClient
     Columns = <>
     RowSelect = True
@@ -124,13 +110,138 @@ object FormMain: TFormMain
     TabOrder = 1
     ViewStyle = vsReport
   end
+  object pLoadTemplate: TPanel
+    Left = 104
+    Top = 63
+    Width = 410
+    Height = 330
+    TabOrder = 2
+    Visible = False
+    object Label1: TLabel
+      Left = 25
+      Top = 73
+      Width = 68
+      Height = 19
+      Caption = #1054#1087#1080#1089#1072#1085#1080#1077':'
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Candara Light'
+      Font.Style = [fsItalic]
+      ParentFont = False
+    end
+    object lPathToTemplate: TLabel
+      Left = 25
+      Top = 236
+      Width = 3
+      Height = 15
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Candara Light'
+      Font.Style = [fsItalic]
+      ParentFont = False
+    end
+    object ldTemplateName: TLabeledEdit
+      Left = 23
+      Top = 36
+      Width = 361
+      Height = 27
+      EditLabel.Width = 66
+      EditLabel.Height = 19
+      EditLabel.Caption = #1053#1072#1079#1074#1072#1085#1080#1077':'
+      EditLabel.Font.Charset = RUSSIAN_CHARSET
+      EditLabel.Font.Color = clWindowText
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Candara Light'
+      EditLabel.Font.Style = [fsItalic]
+      EditLabel.ParentFont = False
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Candara'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+    end
+    object mmDescriotion: TMemo
+      Left = 23
+      Top = 98
+      Width = 361
+      Height = 90
+      TabOrder = 1
+    end
+    object Button1: TButton
+      Left = 23
+      Top = 197
+      Width = 361
+      Height = 33
+      Caption = #1042#1099#1073#1086#1088' '#1092#1072#1081#1083#1072
+      Font.Charset = RUSSIAN_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Candara'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      OnClick = Button1Click
+    end
+    object Panel2: TPanel
+      Left = 23
+      Top = 262
+      Width = 361
+      Height = 37
+      TabOrder = 3
+      object Button2: TButton
+        Left = 1
+        Top = 1
+        Width = 177
+        Height = 35
+        Align = alClient
+        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100
+        Font.Charset = RUSSIAN_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Candara'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        OnClick = Button2Click
+      end
+      object Button3: TButton
+        Left = 178
+        Top = 1
+        Width = 182
+        Height = 35
+        Align = alRight
+        Caption = #1054#1090#1084#1077#1085#1072
+        Font.Charset = RUSSIAN_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Candara'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = Button3Click
+      end
+    end
+  end
+  object mmTmp: TMemo
+    Left = 744
+    Top = 137
+    Width = 161
+    Height = 72
+    TabOrder = 3
+    Visible = False
+    WordWrap = False
+  end
   object ImageList1: TImageList
     ColorDepth = cdDefault
     DrawingStyle = dsFocus
     Height = 48
     Width = 48
-    Left = 816
-    Top = 433
+    Left = 984
+    Top = 449
     Bitmap = {
       494C010105000800040030003000FFFFFFFF0510FFFFFFFFFFFFFFFF424D7600
       0000000000007600000028000000C00000006000000001000400000000000024
@@ -502,8 +613,8 @@ object FormMain: TFormMain
       000000000000}
   end
   object StatusesImageList: TImageList
-    Left = 360
-    Top = 216
+    Left = 984
+    Top = 520
     Bitmap = {
       494C010105000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
@@ -776,16 +887,6 @@ object FormMain: TFormMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000
       000000000000}
   end
-  object NetHTTPClient1: TNetHTTPClient
-    Asynchronous = False
-    ConnectionTimeout = 60000
-    ResponseTimeout = 60000
-    HandleRedirects = True
-    AllowCookies = True
-    UserAgent = 'Embarcadero URI Client/1.0'
-    Left = 848
-    Top = 296
-  end
   object IdHTTP1: TIdHTTP
     AllowCookies = True
     ProxyParams.BasicAuthentication = False
@@ -800,13 +901,20 @@ object FormMain: TFormMain
     Request.Ranges.Units = 'bytes'
     Request.Ranges = <>
     HTTPOptions = [hoForceEncodeParams]
-    Left = 816
-    Top = 192
+    Left = 1000
+    Top = 320
   end
   object Timer1: TTimer
     Interval = 10000
     OnTimer = Timer1Timer
-    Left = 928
-    Top = 392
+    Left = 976
+    Top = 376
+  end
+  object FileOpenDialog: TFileOpenDialog
+    FavoriteLinks = <>
+    FileTypes = <>
+    Options = []
+    Left = 984
+    Top = 224
   end
 end

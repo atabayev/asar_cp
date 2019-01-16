@@ -11,24 +11,21 @@ object FormSelectTemplate: TFormSelectTemplate
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object pBrowser: TPanel
     Left = 177
     Top = 0
     Width = 863
     Height = 548
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 600
-    ExplicitWidth = 440
-    ExplicitHeight = 625
     object WebBrowser: TWebBrowser
       Left = 1
       Top = 1
       Width = 861
-      Height = 546
+      Height = 471
       Align = alClient
       TabOrder = 0
       ExplicitLeft = 140
@@ -36,21 +33,40 @@ object FormSelectTemplate: TFormSelectTemplate
       ExplicitWidth = 300
       ExplicitHeight = 150
       ControlData = {
-        4C000000FD5800006E3800000100000001020000000000000000000000000000
+        4C000000FD580000AE3000000100000001020000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E126208000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
         00000000000000000100000000000000000000000000000000000000}
     end
+    object Panel1: TPanel
+      Left = 1
+      Top = 472
+      Width = 861
+      Height = 75
+      Align = alBottom
+      TabOrder = 1
+      object mmDescription: TMemo
+        Left = 1
+        Top = 1
+        Width = 859
+        Height = 73
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 416
+        ExplicitTop = 32
+        ExplicitWidth = 185
+        ExplicitHeight = 89
+      end
+    end
   end
-  object Panel2: TPanel
+  object pListBox: TPanel
     Left = 0
     Top = 0
     Width = 177
     Height = 548
     Align = alLeft
     TabOrder = 1
-    ExplicitHeight = 612
     object lbTemplates: TListBox
       Left = 1
       Top = 1
@@ -66,13 +82,9 @@ object FormSelectTemplate: TFormSelectTemplate
       ParentFont = False
       TabOrder = 0
       OnClick = lbTemplatesClick
-      ExplicitLeft = 24
-      ExplicitTop = 264
-      ExplicitWidth = 121
-      ExplicitHeight = 97
     end
   end
-  object Panel3: TPanel
+  object pButtons: TPanel
     Left = 0
     Top = 548
     Width = 1040
@@ -94,8 +106,6 @@ object FormSelectTemplate: TFormSelectTemplate
       ParentFont = False
       TabOrder = 0
       OnClick = Button1Click
-      ExplicitLeft = -5
-      ExplicitTop = 5
     end
     object Button2: TButton
       Left = 520
@@ -112,7 +122,6 @@ object FormSelectTemplate: TFormSelectTemplate
       ParentFont = False
       TabOrder = 1
       OnClick = Button2Click
-      ExplicitTop = 5
     end
   end
 end
